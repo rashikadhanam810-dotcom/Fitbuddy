@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>FitBuddy - AI Workout Generator</title>
+
+    <style>
+
+        :root {
+            --bg-1: #fdf6f2;
+            --bg-2: #f4efe8;
+            --bg-3: #eaf8f4;
+            --panel: rgba(255, 255, 255, 0.76);
+            --panel-strong: rgba(255, 255, 255, 0.9);
+            --primary: #8bd8c7;
+            --primary-strong: #5bb9a9;
+            --accent: #f6b9b0;
+            --accent-soft: #f9d7c8;
+            --text: #29453f;
+            --muted: #5f7b74;
+            --line: rgba(76, 108, 101, 0.12);
+            --shadow: rgba(117, 150, 143, 0.18);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            background:
+                radial-gradient(circle at top left, rgba(255,255,255,0.9), transparent 30%),
+                linear-gradient(135deg, var(--bg-3), var(--bg-2), var(--bg-1));
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--text);
+            padding: 24px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 540px;
+            background: var(--panel);
+            padding: 30px 26px;
+            border-radius: 28px;
+            border: 1px solid var(--line);
+            box-shadow: 0 24px 60px var(--shadow);
+            backdrop-filter: blur(16px);
+        }
+
+        h1 {
+            text-align: center;
+            margin: 0 0 10px;
+            font-size: 2.6rem;
+            color: var(--text);
+        }
+
+        .subtitle {
+            text-align: center;
+            color: var(--muted);
+            margin-bottom: 26px;
+            letter-spacing: 0.4px;
+            font-size: 1rem;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        label {
+            display: block;
+            margin-top: 8px;
+            margin-bottom: 6px;
+            font-weight: 700;
+            color: var(--muted);
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 13px 14px;
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            font-size: 15px;
+            background: rgba(255,255,255,0.7);
+            color: var(--text);
+            outline: none;
+        }
+
+        input::placeholder {
+            color: rgba(41, 69, 63, 0.55);
+        }
+
+        input:focus,
+        select:focus {
+            border-color: var(--primary-strong);
+            box-shadow: 0 0 0 3px rgba(91, 185, 169, 0.18);
+        }
+
+        button {
+            width: 100%;
+            margin-top: 22px;
+            padding: 15px;
+            border: none;
+            border-radius: 14px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-strong));
+            color: #153d36;
+            font-size: 17px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+            box-shadow: 0 12px 28px rgba(91, 185, 169, 0.28);
+        }
+
+        button:hover {
+            transform: translateY(-1px);
+            opacity: 0.98;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+    <h1>💪 FitBuddy</h1>
+
+    <p class="subtitle">
+        AI Personalized Workout Generator
+    </p>
+
+
+    <form action="/generate-workout"
+          method="post">
+
+
+        <label>Name</label>
+
+        <input
+            type="text"
+            name="username"
+            placeholder="Enter your name"
+            required
+        >
+
+
+        <label>User ID</label>
+
+        <input
+            type="text"
+            name="user_id"
+            placeholder="Enter unique user ID"
+            required
+        >
+
+
+        <label>Age</label>
+
+        <input
+            type="number"
+            name="age"
+            min="13"
+            max="100"
+            required
+        >
+
+
+        <label>Weight (kg)</label>
+
+        <input
+            type="number"
+            name="weight"
+            step="0.1"
+            required
+        >
+
+
+        <label>Fitness Goal</label>
+
+        <select name="goal" required>
+
+            <option value="">
+                Select Goal
+            </option>
+
+            <option value="weight loss">
+                Weight Loss
+            </option>
+
+            <option value="muscle gain">
+                Muscle Gain
+            </option>
+
+            <option value="general wellness">
+                General Wellness
+            </option>
+
+            <option value="flexibility">
+                Flexibility
+            </option>
+
+        </select>
+
+
+        <label>Workout Intensity</label>
+
+        <select name="intensity" required>
+
+            <option value="">
+                Select Intensity
+            </option>
+
+            <option value="low">
+                Low
+            </option>
+
+            <option value="medium">
+                Medium
+            </option>
+
+            <option value="high">
+                High
+            </option>
+
+        </select>
+
+
+        <button type="submit">
+            Generate My Plan 🚀
+        </button>
+
+    </form>
+
+</div>
+
+</body>
+
+</html>

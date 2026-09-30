@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>FitBuddy Admin</title>
+
+    <style>
+
+        :root {
+            --bg-1: #f9f7f4;
+            --bg-2: #eefaf7;
+            --panel: rgba(255, 255, 255, 0.78);
+            --panel-soft: rgba(255, 255, 255, 0.88);
+            --primary: #9adac8;
+            --primary-strong: #69b7a8;
+            --text: #2b4b47;
+            --muted: #5f7d78;
+            --line: rgba(81, 122, 116, 0.12);
+            --danger: #ef9d9d;
+            --shadow: rgba(142, 177, 170, 0.18);
+        }
+
+        body {
+            margin: 0;
+            padding: 30px;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(180deg, #f7f3ef, #edf9f6 38%, #f6f4ef);
+            color: var(--text);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: auto;
+        }
+
+        h1 {
+            color: var(--text);
+        }
+
+        .user-card {
+            background: var(--panel);
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 20px;
+            border: 1px solid var(--line);
+            overflow-x: auto;
+            box-shadow: 0 18px 40px var(--shadow);
+            backdrop-filter: blur(14px);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            border: 1px solid var(--line);
+            padding: 12px;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        th {
+            background: linear-gradient(135deg, var(--primary), var(--primary-strong));
+            color: #163c36;
+            font-weight: 800;
+        }
+
+        td {
+            background: var(--panel-soft);
+            color: var(--text);
+        }
+
+        pre {
+            white-space: pre-wrap;
+            max-height: 350px;
+            overflow-y: auto;
+            color: var(--muted);
+        }
+
+        .delete-btn {
+            background: var(--danger);
+            color: #4b2d30;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .delete-btn:hover {
+            opacity: 0.9;
+        }
+
+        a {
+            color: var(--primary-strong);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+    <h1>📊 FitBuddy Admin Dashboard</h1>
+
+    <p>
+        Total Users: {{ users|length }}
+    </p>
+
+
+    {% for user in users %}
+
+    <div class="user-card">
+
+        <table>
+
+            <tr>
+
+                <th>User ID</th>
+
+                <td>
+                    {{ user.user_id }}
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+                <th>Name</th>
+
+                <td>
+                    {{ user.username }}
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+                <th>Age</th>
+
+                <td>
+                    {{ user.age }}
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+                <th>Weight</th>
+
+                <td>
+                    {{ user.weight }} kg
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+                <th>Goal</th>
+
+                <td>
+                    {{ user.goal }}
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+                <th>Intensity</th>
+
+                <td>
+                    {{ user.intensity }}
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+                <th>Original Plan</th>
+
+                <td>
+
+                    <pre>
+{{ user.original_plan }}
+                    </pre>
+
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+                <th>Updated Plan</th>
+
+                <td>
+
+                    {% if user.updated_plan %}
+
+                    <pre>
+{{ user.updated_plan }}
+                    </pre>
+
+                    {% else %}
+
+                    No updated plan yet.
+
+                    {% endif %}
+
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+                <th>Action</th>
+
+                <td>
+
+                    <form
+                        action="/delete-user"
+                        method="post"
+                        onsubmit="return confirm('Delete this user?');"
+                    >
+
+                        <input
+                            type="hidden"
+                            name="user_id"
+                            value="{{ user.user_id }}"
+                        >
+
+                        <button
+                            class="delete-btn"
+                            type="submit"
+                        >
+                            Delete User
+                        </button>
+
+                    </form>
+
+                </td>
+
+            </tr>
+
+        </table>
+
+    </div>
+
+    {% else %}
+
+    <p>
+        No users found.
+    </p>
+
+    {% endfor %}
+
+
+    <p>
+
+        <a href="/">
+            ← Back to FitBuddy
+        </a>
+
+    </p>
+
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>FitBuddy Result</title>
+
+    <style>
+
+        :root {
+            --bg-1: #f9f7f4;
+            --bg-2: #eefaf7;
+            --panel: rgba(255, 255, 255, 0.78);
+            --panel-soft: rgba(255, 255, 255, 0.88);
+            --primary: #9adac8;
+            --primary-strong: #69b7a8;
+            --accent: #f6c8c1;
+            --accent-soft: #fce6dc;
+            --text: #2b4b47;
+            --muted: #5f7d78;
+            --line: rgba(81, 122, 116, 0.12);
+            --success: rgba(163, 225, 206, 0.8);
+            --shadow: rgba(142, 177, 170, 0.18);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 30px 18px;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(180deg, #f7f3ef, #edf9f6 38%, #f6f4ef);
+            color: var(--text);
+        }
+
+        .container {
+            max-width: 1050px;
+            margin: auto;
+        }
+
+        .card {
+            background: var(--panel);
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 20px;
+            border: 1px solid var(--line);
+            box-shadow: 0 18px 40px var(--shadow);
+            backdrop-filter: blur(14px);
+        }
+
+        h1,
+        h2 {
+            color: var(--text);
+        }
+
+        .user-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+        }
+
+        .info {
+            background: var(--panel-soft);
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid var(--line);
+        }
+
+        pre {
+            white-space: pre-wrap;
+            font-family: Arial, sans-serif;
+            line-height: 1.7;
+            background: rgba(255,255,255,0.5);
+            padding: 12px;
+            border-radius: 10px;
+            color: var(--text);
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 130px;
+            padding: 12px 14px;
+            border-radius: 12px;
+            border: 1px solid var(--line);
+            resize: vertical;
+            background: rgba(255,255,255,0.7);
+            color: var(--text);
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: var(--primary-strong);
+            box-shadow: 0 0 0 3px rgba(105, 183, 168, 0.12);
+        }
+
+        button {
+            margin-top: 15px;
+            padding: 12px 20px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-strong));
+            color: #163c36;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 700;
+            box-shadow: 0 12px 24px rgba(105, 183, 168, 0.22);
+        }
+
+        a {
+            color: var(--primary-strong);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .success {
+            background: var(--success);
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(76, 116, 109, 0.08);
+        }
+
+        p {
+            color: var(--muted);
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+    <h1>💪 Your FitBuddy Plan</h1>
+
+
+    {% if message %}
+
+    <div class="success">
+        {{ message }}
+    </div>
+
+    {% endif %}
+
+
+    {% if error %}
+
+    <div class="success">
+        {{ error }}
+    </div>
+
+    {% endif %}
+
+
+    <div class="card">
+
+        <h2>👤 User Information</h2>
+
+        <div class="user-info">
+
+            <div class="info">
+                <strong>Name</strong><br>
+                {{ username }}
+            </div>
+
+            <div class="info">
+                <strong>User ID</strong><br>
+                {{ user_id }}
+            </div>
+
+            <div class="info">
+                <strong>Age</strong><br>
+                {{ age }}
+            </div>
+
+            <div class="info">
+                <strong>Weight</strong><br>
+                {{ weight }} kg
+            </div>
+
+            <div class="info">
+                <strong>Goal</strong><br>
+                {{ goal }}
+            </div>
+
+            <div class="info">
+                <strong>Intensity</strong><br>
+                {{ intensity }}
+            </div>
+
+        </div>
+
+    </div>
+
+
+    {% if workout_plan %}
+
+    <div class="card">
+
+        <h2>🏋️ 7-Day Workout Plan</h2>
+
+        <pre>{{ workout_plan }}</pre>
+
+    </div>
+
+    {% endif %}
+
+
+    {% if nutrition_tip %}
+
+    <div class="card">
+
+        <h2>🥗 Nutrition / Recovery Tip</h2>
+
+        <p>
+            {{ nutrition_tip }}
+        </p>
+
+    </div>
+
+    {% endif %}
+
+
+    {% if updated_plan %}
+
+    <div class="card">
+
+        <h2>🔄 Updated Workout Plan</h2>
+
+        <pre>{{ updated_plan }}</pre>
+
+    </div>
+
+    {% endif %}
+
+
+    <div class="card">
+
+        <h2>💬 Update Your Plan</h2>
+
+        <p>
+            Tell FitBuddy what you want to change.
+        </p>
+
+        <form action="/submit-feedback"
+              method="post">
+
+            <input
+                type="hidden"
+                name="user_id"
+                value="{{ user_id }}"
+            >
+
+            <textarea
+                name="feedback"
+                placeholder="Example: Add more rest days or include more cardio..."
+                required
+            ></textarea>
+
+            <button type="submit">
+                Update My Plan
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <p>
+        <a href="/">← Create New Plan</a>
+    </p>
+
+    <p>
+        <a href="/view-all-users">
+            Admin Dashboard
+        </a>
+    </p>
+
+</div>
+
+</body>
+
+</html>
